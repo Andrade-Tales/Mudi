@@ -2,10 +2,17 @@ package br.com.alura.mvc.mudi.dto;
 
 import br.com.alura.mvc.mudi.model.Pedido;
 
-public class RequisicaoNovoPedido {
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
+public class RequisicaoNovoPedido {
+	
+    @NotBlank(message = "O nome do produto é obrigatório!") @Min(5) @Max(20)
     private String nomeProduto;
+    @NotBlank(message = "A url do produto é obrigatório!")
     private String urlProduto;
+    @NotBlank(message = "A url da imagem é obrigatório!")
     private String urlImagem;
     private String descricao;
 
