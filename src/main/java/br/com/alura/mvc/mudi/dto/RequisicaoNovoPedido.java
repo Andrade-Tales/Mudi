@@ -1,14 +1,13 @@
 package br.com.alura.mvc.mudi.dto;
 
-import br.com.alura.mvc.mudi.model.Pedido;
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
+import br.com.alura.mvc.mudi.model.Pedido;
+import br.com.alura.mvc.mudi.model.StatusPedido;
+
 public class RequisicaoNovoPedido {
-	
-    @NotBlank(message = "O nome do produto é obrigatório!") @Min(5) @Max(20)
+
+    @NotBlank(message = "O nome do produto é obrigatório!")
     private String nomeProduto;
     @NotBlank(message = "A url do produto é obrigatório!")
     private String urlProduto;
@@ -48,14 +47,15 @@ public class RequisicaoNovoPedido {
         this.descricao = descricao;
     }
 
-
     public Pedido toPedido() {
-
         Pedido pedido = new Pedido();
         pedido.setDescricao(descricao);
+        pedido.setNomeProduto(nomeProduto);
         pedido.setUrlImagem(urlImagem);
         pedido.setUrlProduto(urlProduto);
-        pedido.setNomeProduto(nomeProduto);
+        pedido.setStatus(StatusPedido.AGUARDANDO);
         return pedido;
     }
+
+
 }

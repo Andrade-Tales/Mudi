@@ -1,8 +1,7 @@
 package br.com.alura.mvc.mudi.controller;
 
-import br.com.alura.mvc.mudi.dto.RequisicaoNovoPedido;
-import br.com.alura.mvc.mudi.model.Pedido;
-import br.com.alura.mvc.mudi.repository.PedidoRepository;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -10,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
+import br.com.alura.mvc.mudi.dto.RequisicaoNovoPedido;
+import br.com.alura.mvc.mudi.model.Pedido;
+import br.com.alura.mvc.mudi.repository.PedidoRepository;
 
 @Controller
 @RequestMapping("pedido")
@@ -30,8 +31,13 @@ public class PedidoController {
             return "pedido/formulario";
         }
 
+        Pedido pedido = requisicao.toPedido();
+        pedidoRepository.save(pedido);
 
-        // LÓGICA QUE FAZ O USUÁRIO NÃO CONSEGUIR CADASTRAR SE NOME DO PRODUTO ESTIVER VAZIO;
+        return "redirect:/home";
+    }
+
+    // LÓGICA QUE FAZ O USUÁRIO NÃO CONSEGUIR CADASTRAR SE NOME DO PRODUTO ESTIVER VAZIO;
 //        if(requisicao.getNomeProduto() == null || requisicao.getNomeProduto().isEmpty()){
 //            return "pedido/formulario";
 //        }
@@ -40,10 +46,4 @@ public class PedidoController {
 //        PEDIDOS (RequisiçãoNovoPedido) SE USA ESSAS ANOTAÇÕES
 //           @NotBlank(message:="O nome do produto é obrigatório!")
 //        ASSIM SE OS VALORES FOREM NULOS AUTOMATICAMENTE EMITE UMA MENSAGEM DE ERRO!
-
-        Pedido pedido = requisicao.toPedido();
-        pedidoRepository.save(pedido);
-
-        return "pedido/formulario";
-    }
 }
